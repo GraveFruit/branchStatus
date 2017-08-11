@@ -1,0 +1,17 @@
+.list {
+
+}
+
+.statusOK {
+    background-color: #85c224;
+    color: white;
+}
+
+.statusBAD {
+    background-color: #f04200;
+    color: white;
+}
+
+.glyphicon {
+    color: white;
+}

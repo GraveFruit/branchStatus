@@ -5,71 +5,42 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="visuallayer.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.js"></script>
+    <script src="dzejson.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.css">
-    <style>
-        .list{
-
-        }
-        .statusOK{
-            background-color: greenyellow;
-            color:white;
-        }
-        .statusBAD{
-            background-color: orangered;
-            color:white;
-        }
-        .glyphicon{
-            color: white;
-        }
-    </style>
 
 
-<script>
 
-    var json = [{"nazwa_hosta":"vbelchatow","data_pomiaru":"2017-08-11 09:09:31","status_pomiaru":0,"status_wysyłkowy":0,"czas_ping":"93.468351ms","licznik_testow":683,"licznik_bledow":0},
-        {"nazwa_hosta":"vbilgoraj","data_pomiaru":"2017-08-11 09:09:31","status_pomiaru":0,"status_wysyłkowy":0,"czas_ping":"95.268965ms","licznik_testow":686,"licznik_bledow":0},
-        {"nazwa_hosta":"vbrzesko","data_pomiaru":"2017-08-11 09:09:31","status_pomiaru":0,"status_wysyłkowy":0,"czas_ping":"19.233154ms","licznik_testow":686,"licznik_bledow":0},
-        {"nazwa_hosta":"vbrzozow","data_pomiaru":"2017-08-11 09:09:30","status_pomiaru":0,"status_wysyłkowy":0,"czas_ping":"85.21306ms","licznik_testow":684,"licznik_bledow":0},
-        {"nazwa_hosta":"vchelm","data_pomiaru":"2017-08-11 09:09:31","status_pomiaru":0,"status_wysyłkowy":0,"czas_ping":"93.131988ms","licznik_testow":683,"licznik_bledow":4},
-        {"nazwa_hosta":"vdebica","data_pomiaru":"2017-08-11 09:09:31","status_pomiaru":0,"status_wysyłkowy":0,"czas_ping":"118.948573ms","licznik_testow":684,"licznik_bledow":0},
-        {"nazwa_hosta":"vdzierzoniow","data_pomiaru":"2017-08-11 09:09:30","status_pomiaru":0,"status_wysyłkowy":0,"czas_ping":"91.044604ms","licznik_testow":684,"licznik_bledow":0},
-        {"nazwa_hosta":"vglubczyce","data_pomiaru":"2017-08-11 09:09:31","status_pomiaru":0,"status_wysyłkowy":1,"czas_ping":"453.883µs","licznik_testow":685,"licznik_bledow":0},
-        {"nazwa_hosta":"vgorlice","data_pomiaru":"2017-08-11 09:09:31","status_pomiaru":0,"status_wysyłkowy":0,"czas_ping":"19.281608ms","licznik_testow":685,"licznik_bledow":0},
-        {"nazwa_hosta":"vgostynin","data_pomiaru":"2017-08-11 09:09:31","status_pomiaru":0,"status_wysyłkowy":0,"czas_ping":"87.889331ms","licznik_testow":685,"licznik_bledow":0},
-        {"nazwa_hosta":"vjaroslaw","data_pomiaru":"2017-08-11 09:09:31","status_pomiaru":0,"status_wysyłkowy":0,"czas_ping":"77.403478ms","licznik_testow":685,"licznik_bledow":0},
-        {"nazwa_hosta":"vjaslo","data_pomiaru":"2017-08-11 09:09:30","status_pomiaru":0,"status_wysyłkowy":0,"czas_ping":"112.899147ms","licznik_testow":685,"licznik_bledow":0},
-        {"nazwa_hosta":"vjastrzebiez","data_pomiaru":"2017-08-11 09:09:31","status_pomiaru":0,"status_wysyłkowy":0,"czas_ping":"75.480436ms","licznik_testow":685,"licznik_bledow":0},
-        {"nazwa_hosta":"vjaworzno","data_pomiaru":"2017-08-11 09:09:31","status_pomiaru":0,"status_wysyłkowy":0,"czas_ping":"13.94872ms","licznik_testow":685,"licznik_bledow":0},
-        {"nazwa_hosta":"vkalisz","data_pomiaru":"2017-08-11 09:09:31","status_pomiaru":0,"status_wysyłkowy":0,"czas_ping":"77.372834ms","licznik_testow":684,"licznik_bledow":0},
-        {"nazwa_hosta":"vkluczbork","data_pomiaru":"2017-08-11 09:09:31","status_pomiaru":0,"status_wysyłkowy":0,"czas_ping":"85.310361ms","licznik_testow":684,"licznik_bledow":0}];
+    <script>
 
-    $(document).ready(function(){
-        for( var i=0; i<12/*json.length*/; i++){
-            if(json[i].status_wysyłkowy>0)
-                $(".row").append("<div class='col-xs-12 statusBAD'><span class='glyphicon glyphicon-remove'></span><p>"+json[i].nazwa_hosta+"</p></div>");
-            else
-                $(".row").append("<div class='col-xs-12 statusOK'><span class='glyphicon glyphicon-check'></span><p>"+json[i].nazwa_hosta+"</p></div>");
-            console.log(i);
 
-        }
-        // jQuery methods go here...
 
-    });
+        $(document).ready(function () {
+            for (var i = 0; i < json.length; i++) {
+                if (json[i].status_wysyłkowy > 0)
+                    $(".row").append("<div class='col-md-1 col-xs-4 text-center statusBAD'><span class='glyphicon glyphicon-remove'></span><p>" + json[i].nazwa_hosta + "</p></div>");
+                else
+                    $(".row").append("<div class='col-md-1 col-xs-4 text-center statusOK'><span class='glyphicon glyphicon-check'></span><p>" + json[i].nazwa_hosta + "</p></div>");
+                console.log(i);
 
-</script>
+            }
+            // jQuery methods go here...
+
+        });
+
+    </script>
 
 </head>
 <body>
-<div class="cointainer-fluid">
+<div class="cointainer">
     <div class="row">
 
     </div>
 
 </div>
-
 
 
 </body>
