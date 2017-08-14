@@ -5,43 +5,60 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.css">
     <link rel="stylesheet" href="visuallayer.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.js"></script>
     <script src="dzejson.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.css">
-
-
 
     <script>
 
+        var jsonlength = mydata.length;
+        var layoutfactorlist = new Array();
+        var num = 0;
 
+        function getWindowFactor() {
+            return $(window).height() / $(window).width();
+        }
 
-        $(document).ready(function () {
-            for (var i = 0; i < json.length; i++) {
-                if (json[i].status_wysyłkowy > 0)
-                    $(".row").append("<div class='col-md-1 col-xs-4 text-center statusBAD'><span class='glyphicon glyphicon-remove'></span><p>" + json[i].nazwa_hosta + "</p></div>");
-                else
-                    $(".row").append("<div class='col-md-1 col-xs-4 text-center statusOK'><span class='glyphicon glyphicon-check'></span><p>" + json[i].nazwa_hosta + "</p></div>");
-                console.log(i);
+        function getArrayElementFactor(x,y) {
+            return x / y;
+        }
 
+        function getFactorDifference(x,y) {
+            return Math.abs(getWindowFactor() - getArrayElementFactor(x, y));
+        }
+
+        $(window).resize(function () {
+            console.log($(window).height() + " x " + $(window).width());
+            for (var i = 0; i < jsonlength; i++) {
+                for (var j = 0; j < i; j++) {
+                    if (i * j >= jsonlength && i * j < jsonlength * 1.2) {
+                        layoutfactorlist.push({x: i, y: j});
+                        break;
+                    }
+                }
             }
-            // jQuery methods go here...
+            console.log(layoutfactorlist);
 
+            var currentFactorDifference = getFactorDifference(layoutfactorlist, 0);
+            for(var i=0; layoutfactorlist.length;i++){
+                if(currentFactorDifference < getFactorDifference(layoutfactorlist[i].x, layoutfactorlist[i].y)){
+                    currentFactorDifference = getFactorDifference(layoutfactorlist[i].x, layoutfactorlist[i].y);
+                    num = i;
+                }
+            }
+            console.log(layoutfactorlist[num]);
         });
+
 
     </script>
 
 </head>
 <body>
-<div class="cointainer">
-    <div class="row">
-
-    </div>
+<div class="container">
 
 </div>
-
-
 </body>
 </html>
