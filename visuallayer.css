@@ -1,17 +1,107 @@
-.list {
+.statusGood{
+    vertical-align: middle;
+    width: 100%;
+    padding-bottom: 100%;
+    background-color: darkolivegreen;
+    margin: 0 auto;
+    float: left;
+    position:relative;
+}
+.statusBad{
+    vertical-align: middle;
+    width: 100%;
+    padding-bottom: 100%;
+    color: white;
+    background-color: orangered;
+    margin: 0 auto;
+    float: left;
+    position:relative;
+}
+.window{
+    max-width: 75%;
+    margin: 0 auto;
+}
+.full{
+    width:100%;
+    height: 100%;
+}
+.content {
+    position:absolute;
+    height:100%; /* = 100% - 2*10% padding */
+    width:100%; /* = 100% - 2*5% padding */
+    padding: 10% 5%;
+    text-align: center;
+    margin: 0 auto;
 
 }
-
-.statusOK {
-    background-color: #85c224;
-    color: white;
+.table{
+    display: table;
+    height:100%;
+    width:100%;
+}
+.table-cell{
+    display: table-cell;
+    vertical-align: middle;
+    height:100%;
+    width:100%;
+}
+@media (min-width: 0px){
+    .hostname{
+        font-size: 0.3em;
+    }
+    .glyphont{
+        font-size: ;
+    }
+}
+@media(min-width: 576px){
+    .hostname{
+        font-size: 0.8em;
+    }
+    .glyphont{
+        font-size: 1.6em;
+    }
+}
+@media(min-width: 720px){
+    .hostname{
+        font-size: 1em;
+    }
+    .glyphont{
+        font-size: 2em;
+    }
+}
+@media(min-width: 960px){
+    .hostname{
+        font-size: 1.1em;
+    }
+    .glyphont{
+        font-size: 2.2em;
+    }
+}
+@media(min-width: 1140px){
+    .hostname{
+        font-size: 0.8em;
+    }
+    .glyphont{
+        font-size: 1.6em;
+    }
+}
+@media(min-width: 1550px){
+    .hostname{
+        font-size: 1.2em;
+    }
+    .glyphont{
+        font-size: 2.4em;
+    }
+}
+@media(min-width: 1850px){
+    .hostname{
+        font-size: 1.5em;
+    }
+    .glyphont{
+        font-size: 3em;
+    }
 }
 
-.statusBAD {
-    background-color: #f04200;
-    color: white;
-}
-
-.glyphicon {
-    color: white;
+body{
+    font-size: 16px;
 }

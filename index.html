@@ -14,50 +14,67 @@
 
     <script>
 
-        var jsonlength = mydata.length;
-        var layoutfactorlist = new Array();
-        var num = 0;
+        function appendTile(json) {
+            var definitionGood =
+                "<div class='col-lg-2 col-md-2 col-sm-3 col-xs-4 text-center'>" +
+                "<div class='statusGood'>" +
+                "<div class='content'>" +
+                "<div class='table'>" +
+                "<div class='table-cell'> " +
+                "<span class='glyphicon glyphicon-home glyphont'></span>" +
+                "<p class='hostname'>" + json.nazwa_hosta.substring(1).toUpperCase() + "</p>" +
+                "</div></div></div></div></div>";
+            var definitionBad =
+                "<div class='col-lg-2 col-md-2 col-sm-3 col-xs-4 text-center'>" +
+                "<div class='statusBad'>" +
+                "<div class='content'>" +
+                "<div class='table'>" +
+                "<div class='table-cell'> " +
+                "<span class='glyphicon glyphicon-home glyphont'></span>" +
+                "<p class='hostname'>" + json.nazwa_hosta.substring(1).toUpperCase() + "</p>" +
+                "</div></div></div></div></div>";
 
-        function getWindowFactor() {
-            return $(window).height() / $(window).width();
+            if (json.status_wysyłkowy > 0)
+                return definitionBad;
+            else
+                return definitionGood;
         }
 
-        function getArrayElementFactor(x,y) {
-            return x / y;
-        }
+        function appendGrid(json, element) {
+            var jsonLength = json.length;
+            jsonLength = Math.ceil(jsonLength / 12);
 
-        function getFactorDifference(x,y) {
-            return Math.abs(getWindowFactor() - getArrayElementFactor(x, y));
-        }
-
-        $(window).resize(function () {
-            console.log($(window).height() + " x " + $(window).width());
-            for (var i = 0; i < jsonlength; i++) {
-                for (var j = 0; j < i; j++) {
-                    if (i * j >= jsonlength && i * j < jsonlength * 1.2) {
-                        layoutfactorlist.push({x: i, y: j});
-                        break;
-                    }
+            for (var i = 0; i < jsonLength; i++) {
+                $(element).append("<div class='row" + i + "'></div>");
+            }
+            var j = 0;
+            for (var i = 0; i < json.length;) {
+                $(".row" + j).append(appendTile(json[i]));
+                i = i + 1;
+                if (i % 12 == 0) {
+                    j = j + 1;
                 }
             }
-            console.log(layoutfactorlist);
 
-            var currentFactorDifference = getFactorDifference(layoutfactorlist, 0);
-            for(var i=0; layoutfactorlist.length;i++){
-                if(currentFactorDifference < getFactorDifference(layoutfactorlist[i].x, layoutfactorlist[i].y)){
-                    currentFactorDifference = getFactorDifference(layoutfactorlist[i].x, layoutfactorlist[i].y);
-                    num = i;
-                }
-            }
-            console.log(layoutfactorlist[num]);
-        });
+        }
+
+        $(document).ready(function () {
+            appendGrid(mydata, ".window");
+
+        })
 
 
     </script>
 
 </head>
 <body>
-<div class="container">
+<div class="container-fluid">
+
+    <div class="containter">
+        <div class="window">
+
+        </div>
+    </div>
 
 </div>
 </body>
