@@ -50,7 +50,7 @@
         font-size: 0.3em;
     }
     .glyphont{
-        font-size: ;
+        font-size: 0.6em;
     }
 }
 @media(min-width: 576px){
@@ -71,7 +71,7 @@
 }
 @media(min-width: 960px){
     .hostname{
-        font-size: 1.1em;
+        font-size: 0.75em;
     }
     .glyphont{
         font-size: 2.2em;
@@ -105,3 +105,8 @@
 body{
     font-size: 16px;
 }
+
+.square{
+    padding-top: 3%;
+}
+

@@ -11,42 +11,32 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.js"></script>
     <script src="dzejson.js"></script>
-    <style>
-        .box{
-            vertical-align: middle;
-            width: 90%;
-            padding-bottom: 90%;
-            background-color: orangered;
+    <script>
+        var url = "http://10.0.0.110:9090/pingStatus";
+
+
+
+        subscribeTokenToTopic();
+        function subscribeTokenToTopic(token){
+
+            fetch('http://10.0.0.110:9090/pingStatus', {
+                'method': 'GET',
+                'content-type':'application/json',
+                'mode':'no-cors',
+                'header':{
+                    'Access-Control-Allow-Origin':'*',
+                }
+
+            }).then(function(response) {
+                console.log(response);
+            }).catch(function(error) {
+                console.error(error);
+            })
         }
-    </style>
+
+    </script>
 </head>
 <body>
-
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-lg-3 col-sm-6 col-xs-12 text-center">
-            <div class="container box">
-                <span class="glyphicon glyphicon-home"></span>
-            </div>
-        </div>
-        <div class="col-lg-3 col-sm-6 col-xs-12 text-center">
-            <div class="container box">
-                <span class="glyphicon glyphicon-home"></span>
-            </div>
-        </div>
-        <div class="col-lg-3 col-sm-6 col-xs-12 text-center">
-            <div class="container box">
-                <span class="glyphicon glyphicon-home"></span>
-            </div>
-        </div>
-        <div class="col-lg-3 col-sm-6 col-xs-12 text-center">
-            <div class="container box">
-                <span class="glyphicon glyphicon-home"></span>
-            </div>
-        </div>
-    </div>
-
-</div>
 
 </body>
 </html>

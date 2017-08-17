@@ -16,20 +16,20 @@
 
         function appendTile(json) {
             var definitionGood =
-                "<div class='col-lg-2 col-md-2 col-sm-3 col-xs-4 text-center'>" +
+                "<div class='col-lg-2 col-md-2 col-sm-3 col-xs-4 text-center square'>" +
                 "<div class='statusGood'>" +
                 "<div class='content'>" +
                 "<div class='table'>" +
-                "<div class='table-cell'> " +
+                "<div class='table-cell'>" +
                 "<span class='glyphicon glyphicon-home glyphont'></span>" +
                 "<p class='hostname'>" + json.nazwa_hosta.substring(1).toUpperCase() + "</p>" +
                 "</div></div></div></div></div>";
             var definitionBad =
-                "<div class='col-lg-2 col-md-2 col-sm-3 col-xs-4 text-center'>" +
+                "<div class='col-lg-2 col-md-2 col-sm-3 col-xs-4 text-center square'>" +
                 "<div class='statusBad'>" +
                 "<div class='content'>" +
                 "<div class='table'>" +
-                "<div class='table-cell'> " +
+                "<div class='table-cell'>" +
                 "<span class='glyphicon glyphicon-home glyphont'></span>" +
                 "<p class='hostname'>" + json.nazwa_hosta.substring(1).toUpperCase() + "</p>" +
                 "</div></div></div></div></div>";
@@ -45,7 +45,7 @@
             jsonLength = Math.ceil(jsonLength / 12);
 
             for (var i = 0; i < jsonLength; i++) {
-                $(element).append("<div class='row" + i + "'></div>");
+                $(element).append("<div class='row row" + i + "'></div>");
             }
             var j = 0;
             for (var i = 0; i < json.length;) {
