@@ -1,10 +1,12 @@
-function loadlink(){
-    $('.window').load('.div',function () {
+function updateStatus() {
+    $('.window').load('.div', function () {
         $(this).unwrap();
-        console.log("refresh");
     });
 }
 
-setInterval(function(){
-    loadlink() // this will run after every 5 seconds
-}, 6000);
+$(document).ready(function () {
+    setInterval(function () {
+        updateStatus();
+    }, 10 * 1000);
+})
+
