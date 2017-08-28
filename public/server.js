@@ -1,10 +1,10 @@
-var siteGenerator = require("./siteGenerator")
+var siteGenerator = require("./siteGenerator");
+var testServer = require('./testServer');
 var variables = require('./variables');
+var express = require('express');
 var request = require('request');
 var http = require('http');
 var fs = require('fs');
-
-var express = require('express');
 var app = express();
 app.use(express.static('public'));
 
@@ -12,6 +12,7 @@ var url = variables.targetUrl();
 var statusJson = [];
 
 function refreshData() {
+    siteGenerator.refreshFormerStatus(statusJson);
     request({
         url: url,
         json: true
@@ -19,7 +20,7 @@ function refreshData() {
         if (!error && response.statusCode === 200) {
             statusJson = body;
             console.log("branches status update. last: " + JSON.stringify(statusJson[0].data_pomiaru));
-            for (var i = 0; i < statusJson.length; i++) {
+            for (var i in statusJson) {
                 if (statusJson[i].status_wysyłkowy > 0) {
                     console.log(statusJson[i].nazwa_hosta.substring(1) + " is offline. " + statusJson[i].data_pomiaru)
                 }
@@ -44,24 +45,6 @@ function serverInit(port) {
                 res.end();
             });
         }
-
-        // else if (req.url.indexOf('.json') != -1) {
-        //
-        // }
-        //
-        // else if (req.url.indexOf('newStatusJS.js') != -1) {
-        //     statusUpdate = [];
-        //     for (var i = 0; i < statusJson.length; i++) {
-        //         statusUpdate.push({
-        //             "nazwa_hosta": statusJson[i].nazwa_hosta,
-        //             "status_wysysłkowy": statusJson[i].status_wysyłkowy
-        //         });
-        //     }
-        //     res.writeHead(200, {'Content-Type': 'text/javascript'});
-        //     res.write("var newStatus = " + JSON.stringify(statusUpdate) + ";\n");
-        //     res.end();
-        // }
-
         else if (req.url.indexOf('update.js') != -1) {
             fs.readFile(__dirname + '/update.js', function (err, data) {
                 if (err) console.log(err);
@@ -70,9 +53,21 @@ function serverInit(port) {
                 res.end();
             });
         }
-        else if(req.url.indexOf('index.html') != -1){
-            res.writeHead(200, {'Content-Type': 'text/html'});
+        else if(req.url.indexOf('status.json') != -1){
+            res.writeHead(200, {'Content-Type': 'text/plaintext'});
             res.end(JSON.stringify(statusJson));
+        }
+        else if(req.url.indexOf('index.html') != -1){
+            res.writeHead(200, {'Content-Type':'text/html'});
+            res.end(siteGenerator.getSite(statusJson));
+        }
+        else if(req.url.indexOf('status.div') != -1){
+            res.writeHead(200, {'Content-Type':'text/html'});
+            res.end(siteGenerator.getWindow(statusJson));
+        }
+        else if(req.url.indexOf('testServerJson.json') != -1){
+            res.writeHead(200, {'Content-Type':'text/plaintext'});
+            res.end(JSON.stringify(testServer.start()));
         }
         else{
             res.writeHead(404, {'Content-Type': 'text/html'});
@@ -95,7 +90,6 @@ function statusJsonInit() {
     });
 };
 
-
 var Server = function () {
 };
 
@@ -103,7 +97,7 @@ Server.prototype.start = function () {
     console.log("server starts...");
     statusJsonInit();
     refreshLoop(variables.refreshInterval());
-    siteGenerator.initializeGenerator(statusJson);
+    setTimeout(function() {siteGenerator.initializeGenerator(statusJson);}, 1000);
     serverInit(variables.workingPort());
 };
 

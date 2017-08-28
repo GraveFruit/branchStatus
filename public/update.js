@@ -1,5 +1,5 @@
 function updateStatus() {
-    $('.window').load('.div', function () {
+    $('.window').load('status.div', function () {
         $(this).unwrap();
     });
 }

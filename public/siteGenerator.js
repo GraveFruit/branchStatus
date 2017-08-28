@@ -1,10 +1,12 @@
-function innerGenerateTile (json, k, formerStatus) {
+var formerStatus = [];
 
-    var branchStatus = getStatusString(k, formerStatus);
+function generateTile(json, k, formerStatus) {
+
+    var branchStatus = getStatusString(json, k, formerStatus);
 
     var singleCell =
         "\t\t\t\t\t\t<div class='col-lg-2 col-md-2 col-sm-3 col-xs-4 text-center square'>\n" +
-        "\t\t\t\t\t\t\t<div id='"+json[k].nazwa_hosta+" 'class='"+branchStatus+"'>\n" +
+        "\t\t\t\t\t\t\t<div id='tile' class='" + branchStatus + "'>\n" +
         "\t\t\t\t\t\t\t\t<div class='content'>\n" +
         "\t\t\t\t\t\t\t\t\t<div class='table'>\n" +
         "\t\t\t\t\t\t\t\t\t\t<div class='table-cell'>\n" +
@@ -15,7 +17,7 @@ function innerGenerateTile (json, k, formerStatus) {
     return singleCell;
 }
 
-function innerGenerateWindow (json){
+function generateWindow(json) {
     var branchTable = "";
     var rowQuantity = Math.ceil(json.length / 12);
     var k = 0;
@@ -24,7 +26,7 @@ function innerGenerateWindow (json){
         branchTable += "\t\t\t\t\t<div class='row row" + i + "'>\n";
         for (var j = 0; j < 12 && k < json.length; j++) {
 
-            branchTable += this.generateTile(this.json, k, this.formerStatus);
+            branchTable += generateTile(json, k, formerStatus);
             k++;
         }
         branchTable += "\t\t\t\t\t</div>\n";
@@ -32,7 +34,7 @@ function innerGenerateWindow (json){
     return branchTable;
 }
 
-function innerGenerateSite (json) {
+function generateSite(json) {
     var header = "<!DOCTYPE html>\n" +
         "<html lang=\"en\">\n" +
         "\t<head>\n" +
@@ -56,43 +58,51 @@ function innerGenerateSite (json) {
         "\t</body>\n" +
         "</html>";
 
-    return header + this.generateWindow(json) + footer;
+    return header + generateWindow(json) + footer;
 }
 
-function innerGetStatusString(status) {
-    switch(status){
-        case 'x':
-            return "statusUnknown";
-        case '0':
-            return "statusGood";
-        case 'g':
-            return "statusGoGood";
-        case 'b':
-            return "statusGoBad";
-        default:
-            return "statusBad";
+function getStatusString(json, k, formerStatus) {
+    if (json[k].status_wysyłkowy>0 && formerStatus[k]>0){
+        return "statuSquare statusBad";
     }
+    else if (json[k].status_wysyłkowy==0 && formerStatus[k]==0){
+        return "statuSquare statusGood";
+    }
+    else if (json[k].status_wysyłkowy>0 && formerStatus[k]==0){
+        return "statuSquare statusGoBad";
+    }
+    else if (json[k].status_wysyłkowy==0 && formerStatus[k]>0){
+        return "statuSquare statusGoGood";
+    }
+    else
+        return "statuSquare statusUnknown";
 }
 
 var SiteGenerator = function () {
-
 }
 
 SiteGenerator.prototype.initializeGenerator = function (json) {
     console.log("siteGenerator init...");
-
-    console.log("siteGenerator init: success");
+    this.refreshFormerStatus(json);
+    if (formerStatus.length > 0) {
+        console.log("siteGenerator init: success");
+        //console.log(formerStatus);
+    }
 };
 
-SiteGenerator.prototype.generateWindow = function () {
+SiteGenerator.prototype.refreshFormerStatus = function (json) {
+    formerStatus = [];
+    for (var i in json) {
+        formerStatus.push(json[i].status_wysyłkowy);
+    }
+}
 
+SiteGenerator.prototype.getWindow = function (json) {
+    return generateWindow(json)
 };
 
-SiteGenerator.prototype.generateSite = function () {
-
+SiteGenerator.prototype.getSite = function (json) {
+    return generateSite(json);
 };
 
 module.exports = new SiteGenerator()
-
-
-
