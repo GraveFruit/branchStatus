@@ -1,11 +1,14 @@
+//siteGenerator generates html code which represents status of branches
+
 var formerStatus = [];
 
+//generateTile generates single tile which represents one branch
 function generateTile(json, k, formerStatus) {
 
     var branchStatus = getStatusString(json, k, formerStatus);
 
     var singleCell =
-        "\t\t\t\t\t\t<div class='col-lg-2 col-md-2 col-sm-3 col-xs-4 text-center square'>\n" +
+        "\t\t\t\t\t\t<div class='col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center square'>\n" +
         "\t\t\t\t\t\t\t<div id='tile' class='" + branchStatus + "'>\n" +
         "\t\t\t\t\t\t\t\t<div class='content'>\n" +
         "\t\t\t\t\t\t\t\t\t<div class='table'>\n" +
@@ -17,6 +20,7 @@ function generateTile(json, k, formerStatus) {
     return singleCell;
 }
 
+//generates div in which grid of tiles is being kept
 function generateWindow(json) {
     var branchTable = "";
     var rowQuantity = Math.ceil(json.length / 12);
@@ -34,6 +38,7 @@ function generateWindow(json) {
     return branchTable;
 }
 
+//generates site as a whole
 function generateSite(json) {
     var header = "<!DOCTYPE html>\n" +
         "<html lang=\"en\">\n" +
@@ -61,6 +66,7 @@ function generateSite(json) {
     return header + generateWindow(json) + footer;
 }
 
+//returns status string of given branch
 function getStatusString(json, k, formerStatus) {
     if (json[k].status_wysyłkowy>0 && formerStatus[k]>0){
         return "statuSquare statusBad";
@@ -79,8 +85,9 @@ function getStatusString(json, k, formerStatus) {
 }
 
 var SiteGenerator = function () {
-}
+};
 
+//initializes site generator
 SiteGenerator.prototype.initializeGenerator = function (json) {
     console.log("siteGenerator init...");
     this.refreshFormerStatus(json);
@@ -90,19 +97,22 @@ SiteGenerator.prototype.initializeGenerator = function (json) {
     }
 };
 
+//refreshes status array used to determine animations
 SiteGenerator.prototype.refreshFormerStatus = function (json) {
     formerStatus = [];
     for (var i in json) {
         formerStatus.push(json[i].status_wysyłkowy);
     }
-}
+};
 
+//generates html which is later sent to client in order to update status of branches
 SiteGenerator.prototype.getWindow = function (json) {
     return generateWindow(json)
 };
 
+//generates site as a whole
 SiteGenerator.prototype.getSite = function (json) {
     return generateSite(json);
 };
 
-module.exports = new SiteGenerator()
+module.exports = new SiteGenerator();

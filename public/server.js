@@ -1,3 +1,5 @@
+//server module
+
 var siteGenerator = require("./siteGenerator");
 var testServer = require('./testServer');
 var variables = require('./variables');
@@ -11,6 +13,8 @@ app.use(express.static('public'));
 var url = variables.targetUrl();
 var statusJson = [];
 
+
+//json request
 function refreshData() {
     siteGenerator.refreshFormerStatus(statusJson);
     request({
@@ -27,15 +31,17 @@ function refreshData() {
             }
         }
     });
-};
+}
 
+//refresh loop
 function refreshLoop(interval) {
-    console.log("refreshLoop init...");
+    console.log("refreshLoop starts");
     setInterval(refreshData, interval) ;
 }
 
+//http server launch function
 function serverInit(port) {
-    console.log("server init...")
+    console.log("server init...");
     http.createServer(function (req, res) {
         if (req.url.indexOf('visuallayer.css') != -1) {
             fs.readFile(__dirname + '/visuallayer.css', function (err, data) {
@@ -75,10 +81,11 @@ function serverInit(port) {
         }
     }).listen(port);
     console.log('server init: success\nserver running at http://localhost:' + port + '/');
-};
+}
 
+//first json request
 function statusJsonInit() {
-    console.log("json init...")
+    console.log("json init...");
     request({
         url: url,
         json: true
@@ -88,11 +95,12 @@ function statusJsonInit() {
             console.log("json init: success");
         }
     });
-};
+}
 
 var Server = function () {
 };
 
+//server launch function
 Server.prototype.start = function () {
     console.log("server starts...");
     statusJsonInit();

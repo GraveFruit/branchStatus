@@ -1,3 +1,4 @@
+//site generator testing module
 var variables = require('./variables');
 
 var json = [{
@@ -323,6 +324,7 @@ var json = [{
 }];
 var prev = 0;
 
+//randomize changes status of random branches
 randomize = function (quantity) {
 
     if(quantity>1){
