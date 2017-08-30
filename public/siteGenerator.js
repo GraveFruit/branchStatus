@@ -8,7 +8,7 @@ function generateTile(json, k, formerStatus) {
     var branchStatus = getStatusString(json, k, formerStatus);
 
     var singleCell =
-        "\t\t\t\t\t\t<div class='col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center square'>\n" +
+        "\t\t\t\t\t\t<div class='col-lg-1 col-md-1 col-sm-2 col-xs-3 text-center square'>\n" +
         "\t\t\t\t\t\t\t<div id='tile' class='" + branchStatus + "'>\n" +
         "\t\t\t\t\t\t\t\t<div class='content'>\n" +
         "\t\t\t\t\t\t\t\t\t<div class='table'>\n" +

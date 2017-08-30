@@ -4,7 +4,7 @@ var Variables = function () {
 
     //isTest is being used to switch between run or test mode
     this.isTest = function () {
-        return true;
+        return false;
     };
 
     //targetUrl is being used to select json source server. if test is "true" url to localhost is being used
